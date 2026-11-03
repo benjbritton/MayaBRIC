@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it and the article it accompanies."
+title: "MayaBRIC: structure-level salt-trade resilience scores for detected Maya structures"
+version: 1.0.0
+date-released: 2026-11-02
+license: MIT
+repository-code: "https://github.com/benjbritton/mayabric"
+authors:
+  - family-names: Britton
+    given-names: Benjamin J.
+    orcid: "https://orcid.org/0009-0006-7475-3795"
+    affiliation: "Department of Geography & GIS, University of Cincinnati"
+preferred-citation:
+  type: article
+  title: "Mapping 57,181 Maya Structures with LiDAR: From AI Object Detection to Attribute-Enriched Geospatial Inventory"
+  journal: "Applied Computing and Geosciences"
+  status: submitted
+  authors:
+    - family-names: Britton
+      given-names: Benjamin J.
+    - family-names: Brewer
+      given-names: Jeffrey
+    - family-names: McLellan
+      given-names: Alec
+    - family-names: Carr
+      given-names: Christopher
+    - family-names: Liu
+      given-names: Lin
+    - family-names: Dunning
+      given-names: Nicholas
+    - family-names: Witschey
+      given-names: Walter R. T.
+    - family-names: Brown
+      given-names: Clifford T.

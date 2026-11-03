@@ -1,0 +1,48 @@
+# Friction surface used for the A pillar: Variant A, dry season (friction_A_dry.tif).
+# Parameters as run on 2026-07-24. The builder script will be added to this repository;
+# until then this file records every parameter it applies.
+#
+# Inputs (not redistributed here; see docs/INPUTS.md):
+#   FABDEM 30 m, reprojected to the grid below      -> elevation for the Tobler slope term
+#   HydroRIVERS v1.0, North and Central America     -> navigable rivers
+#   Natural Earth 10 m coastline                    -> coastal canoe corridor
+#   JRC Global Surface Water, seasonality layer     -> permanent water (barrier)
+
+target:
+  crs_proj4: '+proj=lcc +lat_1=17.0 +lat_2=21.0 +lat_0=19.0 +lon_0=-89.0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs'
+  extent_m: [-420216.4, -413337.9, 251183.6, 335642.1]   # xmin, ymin, xmax, ymax
+  resolution_m: 30
+  align_to: 'fabdem_lcc_30m.tif'
+
+frictions:            # multiplier on walking time; the slope term multiplies on top
+  river_named:    0.75
+  coastal_canoe:  0.70
+  bajo_wet:       3.00   # wet-season variants only (Supplementary S2.8); not in the dry surface
+  bajo_dry:       1.00
+  overland:       1.00
+  barrier:        1000000.0
+
+rivers:
+  # Every reach in the box meeting the Strahler threshold is included, regardless of name.
+  source: 'HydroRIVERS_v10_na.shp'
+  bbox_wgs84: [-93.5, 14.5, -86.5, 22.5]
+  strahler_order_min_dry: 4
+  strahler_order_min_wet: 3
+  rasterize_width_m: 90                     # 3 cells at 30 m
+
+coast:
+  source: 'ne_10m_coastline.shp'
+  buffer_offshore_m: 5000
+  buffer_inland_m:   90                     # beaching / portaging strip; same 0.70 friction
+
+variant_A_jrc_gsw:
+  seasonality_tiles: ['seasonality_100W_20N.tif', 'seasonality_90W_20N.tif',
+                      'seasonality_100W_30N.tif', 'seasonality_90W_30N.tif']
+  seasonality_permanent_threshold: 12       # water 12 months a year -> barrier
+  seasonality_seasonal_range: [1, 11]       # seasonally saturated (wet variants only)
+
+# Resulting dry surface, by class (cells of 30 m):
+#   overland 1.00          478,035,702  (85.56%)
+#   permanent water 1e6     58,022,570  (10.38%)
+#   coastal canoe 0.70      21,376,862   (3.83%)
+#   river 0.75               1,303,946   (0.23%)

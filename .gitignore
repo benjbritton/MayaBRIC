@@ -1,0 +1,13 @@
+# Inputs and outputs stay out of the repository: the detection catalog and EAAMS
+# are restricted, and the rasters are large third-party products.
+*.tif
+*.tiff
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.gpkg
+out/
+__pycache__/
+*.pyc
