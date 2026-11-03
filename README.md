@@ -1,5 +1,7 @@
 # MayaBRIC
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23924657.svg)](https://doi.org/10.5281/zenodo.23924657)
+
 Reference implementation of MayaBRIC, the structure-level salt-trade resilience
 index in Britton et al., *Mapping 57,181 Maya Structures with LiDAR: From AI Object
 Detection to Attribute-Enriched Geospatial Inventory* (Applied Computing and
