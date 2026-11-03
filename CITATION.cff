@@ -4,7 +4,7 @@ title: "MayaBRIC: structure-level salt-trade resilience scores for detected Maya
 version: 1.0.0
 date-released: 2026-11-02
 license: MIT
-repository-code: "https://github.com/benjbritton/mayabric"
+repository-code: "https://github.com/benjbritton/MayaBRIC"
 authors:
   - family-names: Britton
     given-names: Benjamin J.
