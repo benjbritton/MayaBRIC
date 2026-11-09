@@ -2,6 +2,67 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23924657.svg)](https://doi.org/10.5281/zenodo.23924657)
 
+## In plain terms
+
+**What this is.** MayaBRIC gives every ancient Maya structure on a map a score from
+0 to 1. The score describes how well the place was connected to salt and to the
+political centres that organised its trade. This repository holds the code that
+computes the score, the settings it uses, and the locations of the twelve salt
+sources it measures against.
+
+**Why it exists.** Salt was a daily necessity for the ancient Maya, for diet and for
+preserving food. Most of it came from a few places, mainly on the coast, but many
+people lived far inland and depended on trade to get it. A household close to salt
+and to several large centres had more ways to get salt than one far from both, so
+it was less exposed when one route or one source failed. Airborne LiDAR now shows
+tens of thousands of buildings that were never on any map. In our study, a
+deep-learning model found 57,181 of them on the Yucatán Peninsula. MayaBRIC applies
+the same open, repeatable measure to every one of them. Researchers can then compare
+places across the whole region instead of one site at a time. Anyone can also check
+the published numbers, because this code reproduces them.
+
+**What it does.** For any point on the map, it asks three questions:
+
+1. **How far is the nearest salt?** It works out the travel time, in hours, on foot
+   or by canoe from the point to the cheapest of the twelve salt sources. Travel
+   accounts for hills, rivers, the coast and water that can't be crossed. (Pillar A)
+2. **How many important centres are nearby?** It counts the ranked sites within
+   25 km, about a day's round trip on foot, and gives larger centres more weight.
+   (Pillar D)
+3. **How strongly is the point tied to a major centre?** It measures the strongest
+   pull from one nearby centre, which is stronger when the centre is larger and
+   closer. (Pillar G)
+
+Each answer becomes a score between 0 and 1. MayaBRIC is the average of the three,
+and the result is sorted into four bands, 0 to 3. The code also groups the
+structures into site-level clusters. It flags clusters with no recorded site within
+10 km, because these may be settlements that have not been recorded.
+
+**Who it's for.** Archaeologists and GIS researchers who want to use or extend the
+scores, and reviewers or readers who want to check how the published catalog was
+made.
+
+**How to use it.** There are three common uses:
+
+- *Score your own points.* Start with any table of point locations (latitude and
+  longitude). Run steps 1–3 under [Use](#use) to get travel time to salt, the three
+  pillar scores, the MayaBRIC score and band, and the clusters.
+- *Score a single named site.* `scripts/score_site.py` takes a name and coordinates
+  and returns that site's scores. For example, Calakmul scores 0.591.
+- *Check the published catalog.* `tests/verify_against_catalog.py` recomputes every
+  score and compares it with the catalog.
+
+**What you need, and what isn't here.** Some inputs can't be shared in this
+repository. The locations of the 57,181 structures are restricted to protect the
+sites from looting. Identified researchers can get them from the corresponding
+author. The ranked site list comes from the Electronic Atlas of Ancient Maya Sites
+and is available from its authors. The travel-cost map is built from free public
+data, but the script that builds it is not included yet. Until it is, its settings
+are recorded in `config/friction_config.yaml`. [docs/INPUTS.md](docs/INPUTS.md)
+lists every input and where to get it.
+
+## Technical summary
+
 Reference implementation of MayaBRIC, the structure-level salt-trade resilience
 index in Britton et al., *Mapping 57,181 Maya Structures with LiDAR: From AI Object
 Detection to Attribute-Enriched Geospatial Inventory* (Applied Computing and
